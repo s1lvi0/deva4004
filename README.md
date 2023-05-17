@@ -59,6 +59,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Disclaimer
 
 This custom component is developed and maintained independently. Use at your own risk.
+This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with the DEVA Broadcast Ltd, or any of its subsidiaries or its affiliates. The name "DEVA 4004" as well as related names, marks, emblems, and images are registered trademarks of their respective owners.
 
 ## Support
 
