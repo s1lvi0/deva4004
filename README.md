@@ -4,7 +4,7 @@
 [![Issues](https://img.shields.io/github/issues/s1lvi0/deva4004)](https://github.com/s1lvi0/deva4004/issues)
 
 <p align="center">
-  <img src="db4004.png">
+  <img src="https://raw.githubusercontent.com/username/deva4004/main/db4004.png">
 </p>
 
 This is a custom component for Home Assistant that allows you to interact with the DEVA 4004 device via the SNMP protocol.
