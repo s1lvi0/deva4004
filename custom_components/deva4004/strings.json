@@ -1,0 +1,28 @@
+{
+  "title": "DEVA 4004",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to your DEVA4004 device",
+        "data": {
+          "name": "Device Name",
+          "ip_address": "Device IP Address",
+          "port": "Device Port",
+          "read_community": "SNMP Read Community",
+          "write_community": "SNMP Write Community (Optional)"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure DEVA4004 polling intervals",
+        "data": {
+          "poll_interval_data": "Data Poll Interval (seconds)",
+          "poll_interval_alarms": "Alarm Poll Interval (seconds)"
+        }
+      }
+    }
+  }
+}

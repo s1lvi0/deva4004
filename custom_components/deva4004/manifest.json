@@ -1,0 +1,11 @@
+{
+  "codeowners": ["s1lvi0"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/s1lvi0/deva4004/",
+  "domain": "deva4004",
+  "iot_class": "local_polling",
+  "name": "Deva4004",
+  "requirements": ["pysnmplib==5.0.21"],
+  "version": "1.0.0"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "DEVA 4004",
+  "domain": "deva4004",
+  "documentation": "https://github.com/s1lvi0/deva4004/blob/main/README.md",
+  "issue_tracker": "https://github.com/s1lvi0/deva4004/issues",
+  "dependencies": [],
+  "config_flow": true,
+  "render_readme": true
+}
