@@ -1,44 +1,65 @@
-DEVA 4004 Home Assistant Custom Component
-This repository contains the DEVA 4004 custom component for Home Assistant. The DEVA 4004 component allows you to interact with the DEVA 4004 device via the SNMP protocol within your Home Assistant setup.
+# DEVA 4004 Home Assistant Custom Component
 
-Configuration
+![License](https://img.shields.io/github/license/s1lvi0/deva4004)
+[![Issues](https://img.shields.io/github/issues/s1lvi0/deva4004)](https://github.com/s1lvi0/deva4004/issues)
+
+<p align="center">
+  <img src="db4004.png">
+</p>
+
+This is a custom component for Home Assistant that allows you to interact with the DEVA 4004 device via the SNMP protocol.
+
+## Installation
+
+### HACS Installation
+
+If you have the HACS (Home Assistant Community Store) installed:
+
+1. Go to the HACS page on your Home Assistant instance.
+2. Click on "Integrations".
+3. Click on the three dots in the top right corner and select "Custom repositories".
+4. In the "Add custom repository" field enter the URL of this GitHub repository, select "Integration" as the category, and then click "ADD".
+5. You should now see the DEVA 4004 integration in the HACS store. Click on it and then click on "Install this repository in HACS".
+6. Restart Home Assistant to load the component.
+
+### Manual Installation
+
+If you prefer to install the component manually:
+
+1. Clone this repository or download the source code as a zip file and extract it in your `/config/custom_components/` directory. If the directory does not exist, create it first.
+2. Restart Home Assistant to load the component.
+
+## Configuration
+
 The configuration is done via the Home Assistant UI where you can input the device's IP address, port, and the SNMP community for read operations.
 
-Installation
-Clone this repository or download the source code as a zip file and extract it in your /config/custom_components/ directory. If the directory does not exist, create it first.
-Restart Home Assistant to load the component.
-Go to the "Integration" page available in your Home Assistant dashboard's configuration panel.
-Click on the "+ ADD INTEGRATION" button, search for "DEVA 4004", and fill in the required fields.
-Required Information
-CONF_NAME: The name of the DEVA 4004 device (default: "DEVA4004").
-CONF_IP_ADDRESS: The IP address of the DEVA 4004 device (default: "192.168.100.37").
-CONF_PORT: The port to be used (default: 161).
-CONF_READ_COMMUNITY: The SNMP community for read operations (default: "DEVA4004").
-Options
-CONF_POLL_INTERVAL_DATA: The interval between data polls in seconds (default: 3).
-CONF_POLL_INTERVAL_ALARMS: The interval between alarm polls in seconds (default: 90).
-These options can be adjusted in the options flow for the DEVA 4004 integration after it has been added.
+**Required Information**:
 
-Constants
-The const.py file contains all the constants which are used in the DEVA 4004 Home Assistant custom component. Some key constants include:
+- `Device Name`: The name of the DEVA 4004 device (default: "DEVA4004").
+- `Device IP Address`: The IP address of the DEVA 4004 device.
+- `Device Port`: The port to be used (default: 161).
+- `SNMP Read Community`: The SNMP community for read operations (default: "DEVA4004").
+- `SNMP Write Community (Optional)`: The SNMP community for write operations, if applicable.
 
-OID_FW_VERSION: The OID for the firmware version.
-OID_SERIAL_VERSION: The OID for the serial version.
-BASE_OID_MONITORING: The base OID for monitoring data.
-OID_FREQ_MONITOR: The OID for frequency monitoring.
-See const.py for a full list of constants and their descriptions.
+## Options
 
-Errors
-Errors during setup or updates are shown in the Home Assistant log.
+These options can be adjusted in the options flow for the DEVA 4004 integration after it has been added:
 
-Contributions
-Contributions to this repository are welcome. Please fork this project, create a new branch for your proposed changes, and open a pull request.
+- `Data Poll Interval (seconds)`: The interval between data polls (default: 3 seconds).
+- `Alarm Poll Interval (seconds)`: The interval between alarm polls (default: 90 seconds).
 
-License
-This project is released under the MIT License.
+## Contributing
 
-Disclaimer
-This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with the DEVA Broadcast Ltd, or any of its subsidiaries or its affiliates. The name "DEVA 4004" as well as related names, marks, emblems, and images are registered trademarks of their respective owners.
+We welcome contributions from the open-source community. Please submit a pull request or open an issue if you want to make changes or propose new features.
 
-Support
-Please use GitHub issues for questions, issues and feature requests. Thanks!
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Disclaimer
+
+This custom component is developed and maintained independently. Use at your own risk.
+
+## Support
+
+For support and more information about the DEVA 4004 Home Assistant custom component, please visit the GitHub repository [issue page](https://github.com/username/deva4004/issues).
