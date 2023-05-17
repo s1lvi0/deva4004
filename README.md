@@ -62,4 +62,4 @@ This custom component is developed and maintained independently. Use at your own
 
 ## Support
 
-For support and more information about the DEVA 4004 Home Assistant custom component, please visit the GitHub repository [issue page](https://github.com/username/deva4004/issues).
+For support and more information about the DEVA 4004 Home Assistant custom component, please visit the GitHub repository [issue page](https://github.com/s1lvi0/deva4004/issues).
