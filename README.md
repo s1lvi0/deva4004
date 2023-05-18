@@ -31,7 +31,8 @@ If you prefer to install the component manually:
 
 ## Configuration
 
-The configuration is done via the Home Assistant UI where you can input the device's IP address, port, and the SNMP community for read operations.
+The configuration is done via the Home Assistant UI where you can input the device's IP address, port, and the SNMP community for read operations.  
+Is also available a custom lovelace card [deva4004_card](https://github.com/s1lvi0/deva4004_card/).
 
 **Required Information**:
 
