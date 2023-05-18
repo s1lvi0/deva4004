@@ -1,4 +1,4 @@
-# DEVA 4004 Home Assistant Custom Component
+# Deva4004 Home Assistant Custom Component
 
 ![License](https://img.shields.io/github/license/s1lvi0/deva4004)
 [![Issues](https://img.shields.io/github/issues/s1lvi0/deva4004)](https://github.com/s1lvi0/deva4004/issues)
