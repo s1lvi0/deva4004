@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from pysnmp.hlapi import *
 from .snmp_data import _get_monitor_data, _get_alarms_data
 from .const import *
+import socket
 
 _LOGGER = logging.getLogger(__name__)
 
