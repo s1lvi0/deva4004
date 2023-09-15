@@ -129,7 +129,6 @@ class Deva4004SensorBase(Entity):
             "name": self.device_data.data["name"],
             "manufacturer": "Deva Broadcast",
             "model": "Deva4004",
-            "DeviceEntryType": "device",
             "configuration_url": "http://" + self.device_data.data["name"],
             "sw_version":self.device_data.data["fw_version"],
             "hw_version":self.device_data.data["serial_number"],
