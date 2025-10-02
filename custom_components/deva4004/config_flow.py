@@ -4,6 +4,7 @@ from homeassistant.helpers import config_validation as cv
 import voluptuous as vol
 from .snmp_data import _get_logger_data
 import ipaddress
+import socket
 from .const import *
 
 def valid_ip_or_hostname(host):
@@ -29,7 +30,8 @@ DATA_SCHEMA = vol.Schema(
 
 class Deva4004OptionsFlowHandler(config_entries.OptionsFlow):
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        self.config_entry = config_entry
+        super().__init__()
+        self._config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
@@ -37,8 +39,8 @@ class Deva4004OptionsFlowHandler(config_entries.OptionsFlow):
 
         options_schema = vol.Schema(
             {
-                vol.Required(CONF_POLL_INTERVAL_DATA, default=self.config_entry.options.get(CONF_POLL_INTERVAL_DATA, DEFAULT_POLL_INTERVAL_DATA)): vol.All(int, vol.Range(min=10)),
-                vol.Required(CONF_POLL_INTERVAL_ALARMS, default=self.config_entry.options.get(CONF_POLL_INTERVAL_ALARMS, DEFAULT_POLL_INTERVAL_ALARMS)): vol.All(int, vol.Range(min=60)),
+                vol.Required(CONF_POLL_INTERVAL_DATA, default=self._config_entry.options.get(CONF_POLL_INTERVAL_DATA, DEFAULT_POLL_INTERVAL_DATA)): vol.All(int, vol.Range(min=1)),
+                vol.Required(CONF_POLL_INTERVAL_ALARMS, default=self._config_entry.options.get(CONF_POLL_INTERVAL_ALARMS, DEFAULT_POLL_INTERVAL_ALARMS)): vol.All(int, vol.Range(min=10)),
             }
         )
 
@@ -46,7 +48,6 @@ class Deva4004OptionsFlowHandler(config_entries.OptionsFlow):
 
 class Deva4004ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     async def async_step_user(self, user_input=None):
         if user_input is None:
@@ -73,7 +74,7 @@ class Deva4004ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA_COMPILED, errors={"base": str(e)})
 
         try:
-            data = await self.hass.async_add_executor_job(_get_logger_data, host, port, community)
+            data = await _get_logger_data(host, port, community)
         except Exception as e:
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA_COMPILED, errors={"base": str(e)})
 
