@@ -11,7 +11,7 @@ import socket
 _LOGGER = logging.getLogger(__name__)
 
 async def update_listener(hass, entry):
-    _LOGGER.warning(f"[DEVA4004] update_listener called with data interval: {entry.options.get(CONF_POLL_INTERVAL_DATA)}")
+    _LOGGER.debug(f"[DEVA4004] update_listener called with data interval: {entry.options.get(CONF_POLL_INTERVAL_DATA)}")
     coordinators = hass.data[DOMAIN][entry.entry_id]
 
     # Update the intervals of the coordinators - need to call async_set_update_interval
@@ -31,11 +31,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, asyn
 
     async def async_update_data():
         try:
-            _LOGGER.warning(f"[DEVA4004] Before poll: monitoring_data id={id(monitoring_data)}, has {len(monitoring_data)} freq(s): {list(monitoring_data.keys())}")
             result = await _get_monitor_data(ip_address, port, read_community, BASE_OID_MONITORING , monitoring_data)
-            _LOGGER.warning(f"[DEVA4004] After poll: monitoring_data id={id(monitoring_data)}, has {len(monitoring_data)} freq(s): {list(monitoring_data.keys())}")
-            _LOGGER.warning(f"[DEVA4004] Result id={id(result)}, has {len(result)} freq(s): {list(result.keys())}")
-            _LOGGER.warning(f"[DEVA4004] Are they same object? {result is monitoring_data}")
             return result
         except Exception as e:
             raise UpdateFailed(f"Update failed: {e}")
@@ -217,8 +213,6 @@ class Deva4004RfLevelSensor(Deva4004SensorBase):
     @property
     def state(self):
         frequency = str(self.device_data.data["frequency"])
-        if self.coordinator.data:
-            _LOGGER.warning(f"[DEVA4004] RF Sensor: Looking for freq {frequency} in {list(self.coordinator.data.keys())}, found: {frequency in self.coordinator.data}")
         return self.coordinator.data.get(frequency, {}).get("rf_level", None) if self.coordinator.data else None
 
     @property
