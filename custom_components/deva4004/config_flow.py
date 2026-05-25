@@ -2,21 +2,9 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 import voluptuous as vol
+from pysnmp.hlapi.v3arch.asyncio import SnmpEngine
 from .snmp_data import _get_logger_data
-import ipaddress
-import socket
 from .const import *
-
-def valid_ip_or_hostname(host):
-    try:
-        ipaddress.ip_address(host)
-        return host
-    except ValueError:
-        try:
-            socket.gethostbyname(host)
-            return host
-        except socket.gaierror:
-            raise ValueError("Invalid IP or hostname")
 
 DATA_SCHEMA = vol.Schema(
     {
@@ -74,14 +62,13 @@ class Deva4004ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA_COMPILED, errors={"base": str(e)})
 
         try:
-            data = await _get_logger_data(host, port, community)
+            engine = await self.hass.async_add_executor_job(SnmpEngine)
+            data = await _get_logger_data(engine, host, port, community)
         except Exception as e:
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA_COMPILED, errors={"base": str(e)})
 
-        if data is None:
+        if data is None or not data[0]:
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA_COMPILED, errors={"base": "No data in the device"})
-
-        user_input["device_data"] = data
 
         return self.async_create_entry(title=name, data=user_input)
     

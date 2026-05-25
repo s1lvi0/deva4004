@@ -12,5 +12,5 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     unload_ok = await hass.config_entries.async_forward_entry_unload(entry, "sensor")
     if unload_ok:
-        hass.data["deva4004"].pop(entry.entry_id)
+        hass.data.get("deva4004", {}).pop(entry.entry_id, None)
     return unload_ok
