@@ -49,6 +49,19 @@ These options can be adjusted in the options flow for the DEVA 4004 integration 
 - `Data Poll Interval (seconds)`: The interval between data polls (default: 3 seconds).
 - `Alarm Poll Interval (seconds)`: The interval between alarm polls (default: 90 seconds).
 
+## Changelog
+
+### v2.1
+
+- Share a single SNMP engine across all polling calls instead of creating one per request
+- Promote SNMP errors from `debug` to `error` so failures surface without enabling debug logging
+- Simplify config flow validation by relying on the SNMP probe result
+- Guard `async_unload_entry` against a missing `hass.data["deva4004"]` entry
+
+### v2.0
+
+- Update for compatibility with Home Assistant 2025.10.0
+
 ## Contributing
 
 We welcome contributions from the open-source community. Please submit a pull request or open an issue if you want to make changes or propose new features.
