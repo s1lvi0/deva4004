@@ -18,7 +18,8 @@ async def _get_oid(engine: SnmpEngine, host: str, port: int, community: str, oid
             CommunityData(community, mpModel=0),
             await UdpTransportTarget.create((host, port)),
             ContextData(),
-            ObjectType(ObjectIdentity(oid))
+            ObjectType(ObjectIdentity(oid)),
+            lookupMib=False,
         )
 
         if error_indication:
@@ -51,7 +52,8 @@ async def _get_snmp_subtree(engine: SnmpEngine, host: str, port: int, community:
                        ContextData(),
                        0, 50,
                        ObjectType(ObjectIdentity(base_oid)),
-                       lexicographicMode=False
+                       lookupMib=False,
+                       lexicographicMode=False,
                    ):
             if error_indication:
                 _LOGGER.error("SNMP connection error: %s", error_indication)

@@ -51,6 +51,10 @@ These options can be adjusted in the options flow for the DEVA 4004 integration 
 
 ## Changelog
 
+### v2.2
+
+- Restore `lookupMib=False` in `_get_oid` and `_get_snmp_subtree` to stop pysnmp from doing blocking filesystem I/O on the event loop, which fixes the "Detected blocking call to listdir/open" warnings from `homeassistant.util.loop` and the slow ("over 10 seconds") sensor platform setup
+
 ### v2.1
 
 - Share a single SNMP engine across all polling calls instead of creating one per request
