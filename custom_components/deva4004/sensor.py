@@ -1,4 +1,5 @@
 import logging
+import re
 from datetime import timedelta
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.exceptions import ConfigEntryNotReady
@@ -459,6 +460,8 @@ class Deva4004RdsRtSensor(Deva4004FrequencyKeyedSensor):
 
 class Deva4004AlarmSensorBase(Deva4004ChannelKeyedSensor):
     alarm_key = ""
+    alarm_type = ""
+    level_kind = ""
 
     @property
     def state(self):
@@ -480,9 +483,37 @@ class Deva4004AlarmSensorBase(Deva4004ChannelKeyedSensor):
     def icon(self):
         return 'mdi:alert-outline'
 
+    @property
+    def extra_state_attributes(self):
+        instance = self.device_data.instance_name or ""
+        try:
+            freq_mhz = int(self.device_data.data["frequency"]) / 1000
+        except (TypeError, ValueError):
+            freq_mhz = None
+        # SNMP returns station name like "103.0 KISS"; drop the frequency prefix
+        # so messages don't read "103.0 MHz - 103.0 KISS".
+        station_name = self.device_data.data.get("name") or ""
+        station_name = re.sub(r"^\d+(\.\d+)?\s+", "", station_name)
+        level_entity_id = None
+        if self.entity_id and self.level_kind:
+            suffix = f"_{self.level_kind}_alarm"
+            replacement = f"_{self.level_kind}_level"
+            if self.entity_id.endswith(suffix):
+                level_entity_id = self.entity_id[: -len(suffix)] + replacement
+        return {
+            "location": instance.replace("DEVA_", "").replace("_", " "),
+            "frequency_mhz": freq_mhz,
+            "station_name": station_name,
+            "alarm_type": self.alarm_type,
+            "level_entity_id": level_entity_id,
+            "level_unit": "dBμV" if self.level_kind == "rf" else "kHz",
+        }
+
 
 class Deva4004RfAlarmSensor(Deva4004AlarmSensorBase):
     alarm_key = "alarm_rf"
+    alarm_type = "RF"
+    level_kind = "rf"
 
     @property
     def name(self):
@@ -495,6 +526,8 @@ class Deva4004RfAlarmSensor(Deva4004AlarmSensorBase):
 
 class Deva4004MpxAlarmSensor(Deva4004AlarmSensorBase):
     alarm_key = "alarm_mpx"
+    alarm_type = "MPX"
+    level_kind = "mpx"
 
     @property
     def name(self):
@@ -507,6 +540,8 @@ class Deva4004MpxAlarmSensor(Deva4004AlarmSensorBase):
 
 class Deva4004PilotAlarmSensor(Deva4004AlarmSensorBase):
     alarm_key = "alarm_pilot"
+    alarm_type = "Pilot"
+    level_kind = "pilot"
 
     @property
     def name(self):
@@ -519,6 +554,8 @@ class Deva4004PilotAlarmSensor(Deva4004AlarmSensorBase):
 
 class Deva4004RdsAlarmSensor(Deva4004AlarmSensorBase):
     alarm_key = "alarm_rds"
+    alarm_type = "RDS"
+    level_kind = "rds"
 
     @property
     def name(self):
